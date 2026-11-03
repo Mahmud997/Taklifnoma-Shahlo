@@ -8,7 +8,6 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -18,7 +17,6 @@
     --ruby:#7d263b;
     --gold:#bd9147;
     --gold-light:#f6e4ad;
-    --gold-dark:#76501f;
     --paper:#f8f0df;
     --ink:#41251c;
 }
@@ -35,20 +33,16 @@ html {
 
 body {
     min-height:100vh;
-    background:#210a12;
+    overflow-x:hidden;
     color:var(--ink);
     font-family:'Cormorant Garamond',serif;
-    overflow-x:hidden;
+    background:#210a12;
 }
 
 button {
     font-family:inherit;
     cursor:pointer;
 }
-
-/* =====================================
-   ROYAL VELVET BACKGROUND
-===================================== */
 
 body::before {
     content:"";
@@ -68,19 +62,47 @@ body::after {
     z-index:-1;
     pointer-events:none;
     opacity:.13;
-    background-image:
-        repeating-linear-gradient(
-            90deg,
-            transparent 0px,
-            #ffffff08 1px,
-            transparent 3px,
-            transparent 6px
-        );
+    background:repeating-linear-gradient(
+        90deg,transparent 0,#ffffff08 1px,transparent 3px,transparent 6px
+    );
 }
 
-/* =====================================
-   OPENING SCREEN
-===================================== */
+/* LANGUAGE SWITCHER */
+
+.language-switch {
+    position:fixed;
+    z-index:1000;
+    top:max(12px,env(safe-area-inset-top));
+    right:max(12px,env(safe-area-inset-right));
+    display:flex;
+    align-items:center;
+    gap:3px;
+    padding:4px;
+    border:1px solid #f6e4ad99;
+    border-radius:30px;
+    background:#310d19ed;
+    box-shadow:0 5px 22px #0005;
+    backdrop-filter:blur(10px);
+}
+
+.lang-option {
+    min-width:43px;
+    min-height:34px;
+    padding:6px 10px;
+    border:0;
+    border-radius:22px;
+    background:transparent;
+    color:var(--gold-light);
+    font:600 11px Cinzel,serif;
+    letter-spacing:1px;
+}
+
+.lang-option.active {
+    color:#35101d;
+    background:linear-gradient(135deg,#f6e4ad,#bd9147);
+}
+
+/* OPENING SCREEN */
 
 #envelope-scene {
     position:fixed;
@@ -90,13 +112,11 @@ body::after {
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:27px;
-    padding:20px;
-
+    gap:24px;
+    padding:75px 18px 25px;
     background:
         radial-gradient(ellipse at center,#69283c 0%,#3a101f 48%,#16060c 100%);
-
-    transition:opacity 1.5s,visibility 1.5s;
+    transition:opacity 1.2s ease,visibility 1.2s ease;
 }
 
 #envelope-scene.hidden {
@@ -106,68 +126,68 @@ body::after {
 }
 
 .opening-label {
-    font:11px Cinzel;
-    letter-spacing:5px;
     color:var(--gold-light);
+    font:11px Cinzel,serif;
+    letter-spacing:5px;
+    text-align:center;
     text-transform:uppercase;
 }
 
 .opening-title {
-    font:clamp(42px,10vw,66px) 'Great Vibes';
     color:var(--gold-light);
+    font:clamp(48px,11vw,78px) 'Great Vibes',cursive;
     text-align:center;
-    text-shadow:
-        0 2px 3px #000,
-        0 0 30px #e9bd6b77;
+    text-shadow:0 2px 3px #000,0 0 30px #e9bd6b77;
 }
 
 .opening-divider {
-    width:190px;
+    width:min(250px,65vw);
     height:1px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #d5ad62,
-        #fff1c4,
-        #d5ad62,
-        transparent
-    );
+    background:linear-gradient(90deg,transparent,#d5ad62,#fff1c4,#d5ad62,transparent);
 }
 
-/* Envelope */
+/* LARGE ENVELOPE */
 
 .envelope-wrap {
     position:relative;
-    width:min(380px,88vw);
-    height:230px;
+    width:min(520px,92vw);
+    height:clamp(260px,54vw,350px);
     perspective:1400px;
     cursor:pointer;
     filter:drop-shadow(0 25px 30px #0009);
+    -webkit-tap-highlight-color:transparent;
 }
 
 .envelope {
     position:absolute;
     inset:0;
     border:1px solid #d9b66d;
-    border-radius:5px;
-    background:
-        linear-gradient(145deg,#722a41,#491629 65%,#290b17);
-    box-shadow:
-        inset 0 0 0 7px #ffffff08,
-        inset 0 0 25px #0005;
+    border-radius:7px;
+    background:linear-gradient(145deg,#722a41,#491629 65%,#290b17);
+    box-shadow:inset 0 0 0 8px #ffffff08,inset 0 0 30px #0005;
 }
 
 .envelope::before {
     content:"";
     position:absolute;
-    inset:12px;
+    inset:15px;
     border:1px solid #d9b66d77;
+}
+
+.envelope::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(145deg,transparent 49.7%,#d9b66d88 50%,transparent 50.4%),
+        linear-gradient(215deg,transparent 49.7%,#d9b66d88 50%,transparent 50.4%);
+    opacity:.75;
 }
 
 .flap {
     position:absolute;
     inset:0 0 auto;
-    height:60%;
+    height:62%;
     z-index:3;
     background:linear-gradient(150deg,#873b50,#4d192d);
     clip-path:polygon(0 0,100% 0,50% 100%);
@@ -182,30 +202,23 @@ body::after {
 .seal {
     position:absolute;
     z-index:4;
-    top:52%;
+    top:53%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:82px;
-    height:82px;
+    width:clamp(82px,18vw,105px);
+    height:clamp(82px,18vw,105px);
     display:grid;
     place-items:center;
     border-radius:50%;
     border:3px double #f4d98e;
     color:#f7e6b5;
-
-    background:
-        radial-gradient(circle at 30% 20%,#c47b76,#75253b 75%,#35101c);
-
-    box-shadow:
-        0 0 0 5px #b78d4a22,
-        0 0 30px #d9b66d44,
-        0 7px 20px #0008;
-
+    background:radial-gradient(circle at 30% 20%,#c47b76,#75253b 75%,#35101c);
+    box-shadow:0 0 0 6px #b78d4a22,0 0 30px #d9b66d44,0 7px 20px #0008;
     transition:.6s;
 }
 
 .seal span {
-    font:36px 'Great Vibes';
+    font:clamp(38px,8vw,48px) 'Great Vibes',cursive;
 }
 
 .envelope-wrap.opened .seal {
@@ -214,18 +227,12 @@ body::after {
 }
 
 .open-button {
-    padding:15px 36px;
+    padding:16px 38px;
     border:1px solid #f1d994;
     border-radius:40px;
-    background:linear-gradient(
-        120deg,
-        #9a6d2f,
-        #f3d991,
-        #b28a43
-    );
+    background:linear-gradient(120deg,#9a6d2f,#f3d991,#b28a43);
     color:#35111c;
-    font:11px Cinzel;
-    font-weight:700;
+    font:700 11px Cinzel,serif;
     letter-spacing:3px;
     box-shadow:0 7px 30px #0006;
     transition:.3s;
@@ -236,40 +243,37 @@ body::after {
     transform:translateY(-2px);
 }
 
-/* =====================================
-   MAIN PAGE
-===================================== */
+/* INVITATION */
 
 main {
     min-height:100vh;
-    padding:25px 12px 70px;
-    background:
-        radial-gradient(ellipse at 50% 0%,#fff9e9,#e8d8be 85%);
+    padding:8px 7px 35px;
+    background:radial-gradient(ellipse at 50% 0%,#fff9e9,#e8d8be 85%);
 }
 
 .invitation {
     position:relative;
     isolation:isolate;
     width:100%;
-    max-width:760px;
+    max-width:960px;
     margin:auto;
-    padding:35px 24px 30px;
+    padding:clamp(36px,5vw,58px) clamp(20px,5vw,55px) 38px;
     overflow:hidden;
     text-align:center;
-
-    background:
-        radial-gradient(ellipse at 50% 10%,#fffdf5,#f5ead7 75%);
-
+    background:radial-gradient(ellipse at 50% 10%,#fffdf5,#f5ead7 75%);
     border:2px solid #b88d45;
     outline:1px solid #dfc58b;
     outline-offset:-9px;
-
-    box-shadow:
-        0 20px 65px #16070e55,
-        inset 0 0 45px #c49b5322;
+    box-shadow:0 20px 65px #16070e55,inset 0 0 45px #c49b5322;
+    opacity:0;
+    transform:translateY(18px) scale(.97);
+    transition:opacity .9s ease,transform .9s ease;
 }
 
-/* Golden border */
+.invitation.revealed {
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
 
 .invitation::before {
     content:"";
@@ -282,8 +286,8 @@ main {
 
 .corner {
     position:absolute;
-    width:75px;
-    height:75px;
+    width:clamp(48px,9vw,85px);
+    height:clamp(48px,9vw,85px);
     z-index:2;
     color:#a47b37;
     opacity:.85;
@@ -294,105 +298,66 @@ main {
     height:100%;
 }
 
-.corner-tl {
-    top:7px;
-    left:7px;
-}
-
-.corner-tr {
-    top:7px;
-    right:7px;
-    transform:scaleX(-1);
-}
-
-.corner-bl {
-    bottom:7px;
-    left:7px;
-    transform:scaleY(-1);
-}
-
-.corner-br {
-    bottom:7px;
-    right:7px;
-    transform:scale(-1);
-}
-
-/* =====================================
-   TYPOGRAPHY
-===================================== */
+.corner-tl {top:7px;left:7px}
+.corner-tr {top:7px;right:7px;transform:scaleX(-1)}
+.corner-bl {bottom:7px;left:7px;transform:scaleY(-1)}
+.corner-br {bottom:7px;right:7px;transform:scale(-1)}
 
 .top-symbol {
-    font:36px 'Cinzel';
     color:#9e7635;
-    margin-bottom:5px;
+    font:38px Cinzel,serif;
+    margin-bottom:7px;
     text-shadow:0 2px 4px #b58b4c55;
 }
 
 .heading {
-    font:clamp(24px,5vw,35px) Cinzel;
-    font-weight:700;
-    letter-spacing:clamp(3px,1.5vw,10px);
     color:#956b2d;
-
-    text-shadow:
-        0 1px #fff,
-        0 2px 1px #e1c98f,
-        0 4px 5px #8c652c55;
+    font:700 clamp(25px,5vw,39px) Cinzel,serif;
+    letter-spacing:clamp(3px,1.5vw,10px);
+    text-shadow:0 1px #fff,0 2px 1px #e1c98f,0 4px 5px #8c652c55;
 }
 
 .gold-rule {
     width:78%;
     height:2px;
-    margin:12px auto;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #a67a35,
-        #f8e7b2,
-        #a67a35,
-        transparent
-    );
+    margin:15px auto;
+    background:linear-gradient(90deg,transparent,#a67a35,#f8e7b2,#a67a35,transparent);
 }
 
 .subtitle {
-    font:600 clamp(20px,5vw,26px) 'Playfair Display';
+    margin-top:17px;
     color:#4c2c20;
-    margin-top:15px;
+    font:600 clamp(21px,5vw,29px) 'Playfair Display',serif;
 }
 
 .description {
-    font:clamp(19px,4.7vw,25px) 'Cormorant Garamond';
-    line-height:1.3;
+    max-width:700px;
+    margin:8px auto;
     color:#52372a;
-    margin:4px auto;
+    font:clamp(20px,4.5vw,27px)/1.35 'Cormorant Garamond',serif;
 }
 
 .names {
-    font:700 clamp(37px,9.5vw,72px)/1.15 'Playfair Display';
-    letter-spacing:1px;
+    margin:25px auto 12px;
     color:#805421;
-    margin:24px auto 10px;
-
-    text-shadow:
-        0 1px 0 #fff,
-        0 2px 0 #e1c58b,
-        0 4px 8px #7a4b1e66;
+    font:700 clamp(40px,9vw,82px)/1.15 'Playfair Display',serif;
+    letter-spacing:1px;
+    text-shadow:0 1px #fff,0 2px #e1c58b,0 4px 8px #7a4b1e66;
 }
 
 .rings {
-    width:90px;
-    height:48px;
-    margin:0 auto 10px;
     display:block;
+    width:100px;
+    height:55px;
+    margin:0 auto 12px;
     filter:drop-shadow(0 3px 4px #9a6a2e55);
 }
 
 .invitation-text {
-    font:clamp(19px,4.8vw,25px) 'Cormorant Garamond';
-    line-height:1.35;
+    max-width:680px;
+    margin:12px auto 23px;
     color:#523629;
-    max-width:580px;
-    margin:10px auto 20px;
+    font:clamp(20px,4.6vw,27px)/1.4 'Cormorant Garamond',serif;
 }
 
 .ornament {
@@ -400,61 +365,44 @@ main {
     align-items:center;
     justify-content:center;
     gap:12px;
-    margin:20px auto;
+    margin:22px auto;
     color:#aa803a;
 }
 
-.ornament::before,
-.ornament::after {
+.ornament::before,.ornament::after {
     content:"";
-    width:75px;
+    width:85px;
     height:1px;
     background:linear-gradient(90deg,transparent,#a9803d);
 }
 
-.ornament::after {
-    transform:rotate(180deg);
-}
+.ornament::after {transform:rotate(180deg)}
+.ornament span {font:22px Cinzel,serif}
 
-.ornament span {
-    font:20px Cinzel;
-}
-
-/* =====================================
-   EVENT DETAILS
-===================================== */
+/* EVENT DETAILS */
 
 .details {
     display:grid;
     grid-template-columns:1fr 1fr 1.35fr;
-    gap:9px;
-    margin:23px 0;
+    gap:12px;
+    margin:27px 0;
 }
 
 .detail {
     position:relative;
     min-width:0;
-    min-height:130px;
-    padding:13px 6px;
-
+    min-height:150px;
+    padding:16px 9px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
-    background:
-        linear-gradient(145deg,#fffdf8,#f0e2ce);
-
+    background:linear-gradient(145deg,#fffdf8,#f0e2ce);
     border:1px solid #b79a72;
-
-    box-shadow:
-        inset 0 0 0 3px #fff9ed,
-        inset 0 0 0 4px #d5bd91,
-        0 5px 14px #60401e22;
+    box-shadow:inset 0 0 0 3px #fff9ed,inset 0 0 0 4px #d5bd91,0 5px 14px #60401e22;
 }
 
-.detail::before,
-.detail::after {
+.detail::before,.detail::after {
     content:"✧";
     position:absolute;
     color:#a57a35;
@@ -465,9 +413,9 @@ main {
 .detail::after {bottom:3px}
 
 .detail-icon {
-    width:30px;
-    height:30px;
-    margin-bottom:5px;
+    width:32px;
+    height:32px;
+    margin-bottom:7px;
     color:#79583a;
 }
 
@@ -482,141 +430,94 @@ main {
 }
 
 .detail-label {
-    font:10px Cinzel;
-    letter-spacing:2px;
     color:#92703e;
+    font:10px Cinzel,serif;
+    letter-spacing:2px;
 }
 
 .detail strong {
     display:block;
-    font:600 clamp(16px,4vw,23px) 'Playfair Display';
-    line-height:1.2;
+    margin-top:7px;
     color:#59361f;
-    margin-top:6px;
+    font:600 clamp(17px,3.6vw,24px)/1.25 'Playfair Display',serif;
 }
 
 .address strong {
-    font-size:clamp(12px,3.1vw,17px);
+    font-size:clamp(13px,2.8vw,18px);
     overflow-wrap:anywhere;
 }
 
-/* =====================================
-   HOSTS AND VENUE
-===================================== */
+/* HOSTS AND BUTTONS */
 
 .host-title {
-    font:italic clamp(20px,5vw,25px) 'Playfair Display';
+    margin:20px auto 8px;
     color:#87602c;
-    margin:18px auto 7px;
+    font:italic clamp(21px,4.5vw,27px) 'Playfair Display',serif;
 }
 
 .hosts {
-    font:600 clamp(19px,4.7vw,25px)/1.3 'Cormorant Garamond';
     color:#4f3225;
+    font:600 clamp(20px,4.4vw,27px)/1.35 'Cormorant Garamond',serif;
 }
 
 .closing {
-    font:clamp(18px,4.3vw,23px)/1.4 'Cormorant Garamond';
+    margin:18px auto;
     color:#503729;
-    margin:16px auto;
+    font:clamp(19px,4.2vw,25px)/1.4 'Cormorant Garamond',serif;
 }
-
-.venue {
-    position:relative;
-    margin:25px -5px 0;
-    padding:22px 10px 17px;
-
-    border-top:2px solid #bd9147;
-    border-bottom:2px solid #bd9147;
-
-    background:
-        linear-gradient(145deg,#f0dfbe,#d9bc8b,#f4e8d2);
-
-    box-shadow:
-        inset 0 0 0 4px #ffffff55,
-        inset 0 0 25px #9d713c33;
-}
-
-.venue-name {
-    font:600 clamp(25px,6vw,39px) Cinzel;
-    letter-spacing:6px;
-    color:#4b2a20;
-    text-shadow:0 2px 3px #c7a66d;
-}
-
-.venue-sub {
-    font:12px Cinzel;
-    letter-spacing:5px;
-    color:#77532c;
-    margin-top:5px;
-}
-
-/* =====================================
-   BUTTONS
-===================================== */
 
 .actions {
     display:flex;
     justify-content:center;
-    gap:12px;
     flex-wrap:wrap;
-    margin-top:24px;
+    gap:12px;
+    margin:25px auto 5px;
 }
 
 .actions button {
-    padding:12px 21px;
-    border:1px solid #a98140;
-    border-radius:30px;
-
-    background:linear-gradient(
-        135deg,
-        #fffaf0,
-        #e8d3a9
-    );
-
-    color:#694820;
-    font:11px Cinzel;
-    letter-spacing:2px;
-
-    transition:.3s;
+    min-height:48px;
+    padding:13px 22px;
+    border:1px solid #9c7337;
+    border-radius:3px;
+    color:#fff4d5;
+    background:linear-gradient(135deg,#54172b,#7d263b);
+    box-shadow:0 5px 14px #4c142633;
+    font:600 10px Cinzel,serif;
+    letter-spacing:1.5px;
+    transition:.25s;
 }
 
 .actions button:hover {
-    transform:translateY(-3px);
-    box-shadow:0 6px 18px #a77b3d33;
+    transform:translateY(-2px);
+    box-shadow:0 9px 20px #4c142655;
 }
 
-/* =====================================
-   MUSIC
-===================================== */
+/* MUSIC BUTTON */
 
 .music {
     position:fixed;
-    right:18px;
+    z-index:50;
+    right:20px;
     bottom:20px;
-    z-index:150;
-
-    width:56px;
-    height:56px;
-
-    display:none;
+    width:55px;
+    height:55px;
+    display:grid;
     place-items:center;
-
-    border:2px solid #f4dda0;
+    border:1px solid #f1d994;
     border-radius:50%;
-
-    background:linear-gradient(
-        135deg,
-        #f6e4a9,
-        #b78a40
-    );
-
-    color:#431a25;
-    box-shadow:0 5px 25px #0005;
+    color:#f7e6b5;
+    background:linear-gradient(145deg,#7d263b,#310d19);
+    box-shadow:0 5px 20px #0005;
+    opacity:0;
+    visibility:hidden;
+    transform:scale(.7);
+    transition:.3s;
 }
 
 .music.show {
-    display:grid;
+    opacity:1;
+    visibility:visible;
+    transform:scale(1);
 }
 
 .music svg {
@@ -624,157 +525,95 @@ main {
     height:25px;
     fill:none;
     stroke:currentColor;
-    stroke-width:1.7;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
 }
 
-.music.playing {
-    animation:musicSpin 8s linear infinite;
+.music.playing svg {
+    animation:musicPulse 1.2s infinite ease-in-out;
 }
 
-@keyframes musicSpin {
-    to {transform:rotate(360deg)}
+@keyframes musicPulse {
+    0%,100% {transform:scale(1)}
+    50% {transform:scale(1.16)}
 }
 
-/* =====================================
-   GOLDEN PARTICLES
-===================================== */
+/* RESPONSIVE */
 
-.particle {
-    position:fixed;
-    top:-10px;
-    z-index:90;
-    width:4px;
-    height:4px;
-    border-radius:50%;
-    background:#f4d58b;
-    box-shadow:0 0 9px 2px #d7a84f88;
-    pointer-events:none;
-    animation:particleFall linear forwards;
-}
-
-@keyframes particleFall {
-    to {
-        transform:translate(40px,110vh);
-        opacity:0;
-    }
-}
-
-/* =====================================
-   PETALS
-===================================== */
-
-.petal {
-    position:fixed;
-    top:-25px;
-    z-index:85;
-    width:12px;
-    height:18px;
-    border-radius:80% 0 80% 0;
-    background:linear-gradient(135deg,#fff0dd,#b75b6a);
-    pointer-events:none;
-    animation:petalFall linear forwards;
-}
-
-@keyframes petalFall {
-    to {
-        transform:translate(90px,110vh) rotate(650deg);
-        opacity:0;
-    }
-}
-
-/* =====================================
-   ENTRANCE ANIMATION
-===================================== */
-
-.invite-content {
-    animation:reveal 1.8s ease both;
-}
-
-@keyframes reveal {
-    from {
-        opacity:0;
-        transform:translateY(25px);
-        filter:blur(5px);
+@media(max-width:650px) {
+    #envelope-scene {
+        gap:20px;
+        padding-top:75px;
     }
 
-    to {
-        opacity:1;
-        transform:translateY(0);
-        filter:blur(0);
-    }
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media(max-width:600px) {
-
-    main {
-        padding:7px 4px 30px;
-    }
-
-    .invitation {
-        padding:29px 12px 22px;
-        width:100%;
-    }
-
-    .corner {
-        width:49px;
-        height:49px;
-    }
-
-    .details {
-        gap:5px;
-    }
-
-    .detail {
-        min-height:116px;
-        padding:9px 3px;
-    }
-
-    .detail-label {
-        font-size:8px;
-        letter-spacing:1px;
-    }
-
-    .detail-icon {
-        width:26px;
-        height:26px;
-    }
-
-    .names {
-        font-size:clamp(35px,9.2vw,55px);
-    }
-
-    .heading {
+    .opening-label {
+        font-size:9px;
         letter-spacing:3px;
     }
 
-    .venue {
-        margin-left:0;
-        margin-right:0;
+    .envelope-wrap {
+        width:94vw;
+        height:clamp(245px,68vw,330px);
     }
-}
 
-@media(max-width:360px) {
+    main {
+        padding:5px 5px 25px;
+    }
+
+    .invitation {
+        width:100%;
+        padding:38px 17px 30px;
+    }
 
     .details {
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+    }
+
+    .detail {
+        min-height:135px;
+        padding:13px 6px;
     }
 
     .detail.address {
         grid-column:1/-1;
-        min-height:100px;
     }
 
-    .names {
-        font-size:35px;
+    .address strong {
+        font-size:16px;
     }
+
+    .actions {
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .actions button {
+        width:100%;
+        min-height:48px;
+    }
+
+    .music {
+        right:13px;
+        bottom:13px;
+        width:49px;
+        height:49px;
+    }
+
+    .corner {
+        width:48px;
+        height:48px;
+    }
+}
+
+@media(min-width:651px) {
+    main {padding:12px 12px 45px}
 }
 
 @media(prefers-reduced-motion:reduce) {
     *,*::before,*::after {
+        scroll-behavior:auto!important;
         animation-duration:.01ms!important;
         transition-duration:.01ms!important;
     }
@@ -783,233 +622,165 @@ main {
 </head>
 
 <body>
+
+<!-- LANGUAGE SWITCHER -->
 <div class="language-switch" role="group" aria-label="Тілді таңдау / Тилни танлаш">
-    <button type="button" class="lang-option active" data-lang="uz" aria-pressed="true">ЎЗ</button>
-    <span class="lang-divider" aria-hidden="true"></span>
-    <button type="button" class="lang-option" data-lang="kk" aria-pressed="false">ҚАЗ</button>
+    <button class="lang-option active" type="button" data-lang="uz" aria-pressed="true">ЎЗ</button>
+    <button class="lang-option" type="button" data-lang="kk" aria-pressed="false">ҚАЗ</button>
 </div>
 
-
-<!-- OPENING ENVELOPE -->
-
+<!-- ENVELOPE OPENING SCREEN -->
 <section id="envelope-scene">
+    <div class="opening-label" data-i18n="openingLabel">Тўй таклифномаси</div>
 
-    <div class="opening-label" data-i18n="openingLabel">
-        Тўй таклифномаси
-    </div>
-
-    <div class="opening-title">
-        Шахло &amp; Миржалол
-    </div>
+    <h1 class="opening-title">Шахло &amp; Миржалол</h1>
 
     <div class="opening-divider"></div>
 
     <div class="envelope-wrap" id="envelope"
          role="button" tabindex="0"
-         aria-label="Открыть приглашение">
-
+         aria-label="Таклифномани очиш">
         <div class="envelope"></div>
         <div class="flap"></div>
-
-        <div class="seal">
-            <span>Ш &amp; М</span>
-        </div>
-
+        <div class="seal"><span>Ш &amp; М</span></div>
     </div>
 
-    <button class="open-button" id="openBtn" data-i18n="openButton">
+    <button class="open-button" id="openBtn" type="button" data-i18n="openButton">
         ТАКЛИФНОМАНИ ОЧИШ
     </button>
-
 </section>
 
-<!-- INVITATION -->
+<!-- MAIN INVITATION -->
+<main id="invitationMain">
+<article class="invitation" id="invitationCard">
 
-<main>
-
-<article class="invitation">
-
-    <!-- CORNER ORNAMENTS -->
-
-    <div class="corner corner-tl">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="27" cy="27" r="4" fill="currentColor"/>
-            <circle cx="52" cy="18" r="3" fill="currentColor"/>
+    <!-- Decorative corners -->
+    <div class="corner corner-tl" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none">
+            <path d="M8 92V8H92 M8 45C28 45 45 28 45 8 M8 68C42 68 68 42 68 8 M30 8C30 20 20 30 8 30"
+                  stroke="currentColor" stroke-width="2"/>
+            <path d="M8 8L28 8L8 28Z" fill="currentColor" opacity=".25"/>
         </svg>
     </div>
 
-    <div class="corner corner-tr">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="27" cy="27" r="4" fill="currentColor"/>
-            <circle cx="52" cy="18" r="3" fill="currentColor"/>
+    <div class="corner corner-tr" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none">
+            <path d="M8 92V8H92 M8 45C28 45 45 28 45 8 M8 68C42 68 68 42 68 8 M30 8C30 20 20 30 8 30"
+                  stroke="currentColor" stroke-width="2"/>
+            <path d="M8 8L28 8L8 28Z" fill="currentColor" opacity=".25"/>
         </svg>
     </div>
 
-    <div class="corner corner-bl">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <div class="corner corner-bl" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none">
+            <path d="M8 92V8H92 M8 45C28 45 45 28 45 8 M8 68C42 68 68 42 68 8 M30 8C30 20 20 30 8 30"
+                  stroke="currentColor" stroke-width="2"/>
+            <path d="M8 8L28 8L8 28Z" fill="currentColor" opacity=".25"/>
         </svg>
     </div>
 
-    <div class="corner corner-br">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <div class="corner corner-br" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none">
+            <path d="M8 92V8H92 M8 45C28 45 45 28 45 8 M8 68C42 68 68 42 68 8 M30 8C30 20 20 30 8 30"
+                  stroke="currentColor" stroke-width="2"/>
+            <path d="M8 8L28 8L8 28Z" fill="currentColor" opacity=".25"/>
         </svg>
     </div>
 
-    <div class="invite-content">
+    <div class="top-symbol">❦</div>
 
-        <div class="top-symbol">❦</div>
+    <h2 class="heading" data-i18n="heading">ТАКЛИФНОМА</h2>
 
-        <div class="heading" data-i18n="heading">
-            ТАКЛИФНОМА
-        </div>
+    <div class="gold-rule"></div>
 
-        <div class="gold-rule"></div>
+    <div class="subtitle" data-i18n="greeting">Азиз меҳмонлар!</div>
 
-        <div class="subtitle" data-i18n="greeting">
-            Азиз меҳмонлар!
-        </div>
+    <p class="description" data-i18n="intro">
+        Сизларни азиз фарзандларимиз Шахло ва Миржалолнинг
+    </p>
 
-        <p class="description" data-i18n="intro">
-            Сизни азиз фарзандларимиз
-        </p>
+    <div class="names">Шахло <span style="font-family:'Great Vibes';color:#a77a38">&amp;</span> Миржалол</div>
 
-        <div class="names">
-            ШАХЛО &amp; МИРЖАЛОЛ
-        </div>
+    <svg class="rings" viewBox="0 0 120 60" fill="none" aria-hidden="true">
+        <circle cx="47" cy="30" r="20" stroke="#b58a45" stroke-width="3"/>
+        <circle cx="73" cy="30" r="20" stroke="#b58a45" stroke-width="3"/>
+        <path d="M58 11L62 4L66 11L62 18Z" fill="#d2ad68"/>
+        <path d="M60 18L62 25L64 18" stroke="#d2ad68" stroke-width="1.5"/>
+    </svg>
 
-        <!-- SVG WEDDING RINGS -->
+    <p class="invitation-text" data-i18n="inviteText">
+        никоҳ тўйи муносабати билан ташкил этилаётган қувончли дастурхонимизга таклиф этамиз.
+    </p>
 
-        <svg class="rings" viewBox="0 0 120 60">
-            <defs>
-                <linearGradient id="ringGold" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#fff0b8"/>
-                    <stop offset="35%" stop-color="#c49a49"/>
-                    <stop offset="65%" stop-color="#8b5c20"/>
-                    <stop offset="100%" stop-color="#f3d68b"/>
-                </linearGradient>
-            </defs>
+    <div class="ornament"><span>❦</span></div>
 
-            <ellipse cx="47" cy="32" rx="28" ry="15"
-                transform="rotate(-28 47 32)"
-                fill="none" stroke="url(#ringGold)" stroke-width="5"/>
+    <div class="details">
 
-            <ellipse cx="73" cy="32" rx="28" ry="15"
-                transform="rotate(28 73 32)"
-                fill="none" stroke="url(#ringGold)" stroke-width="5"/>
-
-            <path d="M57 13 L60 6 L63 13 L70 16 L63 19 L60 26 L57 19 L50 16 Z"
-                fill="#bd9147"/>
-        </svg>
-
-        <p class="invitation-text" data-i18n="inviteText">
-            Шахло ва Миржалолнинг никоҳ тўйи муносабати билан
-            ташкил этилаётган қувончли дастурхонимизга
-            таклиф этамиз.
-        </p>
-
-        <div class="ornament">
-            <span>✦</span>
-        </div>
-
-        <!-- DATE / TIME / LOCATION -->
-
-        <div class="details">
-
-            <div class="detail">
-
-                <div class="detail-icon">
-                    <svg viewBox="0 0 32 32">
-                        <rect x="4" y="7" width="24" height="21" rx="2"/>
-                        <path d="M10 4 V10 M22 4 V10 M4 13 H28"/>
-                        <path d="M10 18 H13 M19 18 H22 M10 23 H13"/>
-                    </svg>
-                </div>
-
-                <div class="detail-label" data-i18n="dateLabel">САНА</div>
-
-                <strong data-i18n-html="dateValue">10<br>ноябрь</strong>
-
+        <div class="detail">
+            <div class="detail-icon">
+                <svg viewBox="0 0 32 32">
+                    <rect x="4" y="7" width="24" height="21" rx="2"/>
+                    <path d="M10 4V10M22 4V10M4 13H28"/>
+                    <path d="M10 18H13M19 18H22M10 23H13"/>
+                </svg>
             </div>
+            <div class="detail-label" data-i18n="dateLabel">САНА</div>
+            <strong data-i18n-html="dateValue">10<br>ноябрь</strong>
+        </div>
 
-            <div class="detail">
-
-                <div class="detail-icon">
-                    <svg viewBox="0 0 32 32">
-                        <circle cx="16" cy="16" r="12"/>
-                        <path d="M16 8 V16 L22 20"/>
-                    </svg>
-                </div>
-
-                <div class="detail-label" data-i18n="timeLabel">ВАҚТ</div>
-
-                <strong data-i18n-html="timeValue">19:00<br>соат</strong>
-
+        <div class="detail">
+            <div class="detail-icon">
+                <svg viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="12"/>
+                    <path d="M16 8V16L22 20"/>
+                </svg>
             </div>
+            <div class="detail-label" data-i18n="timeLabel">ВАҚТ</div>
+            <strong data-i18n-html="timeValue">19:00<br>соат</strong>
+        </div>
 
-            <div class="detail address">
-
-                <div class="detail-icon">
-                    <svg viewBox="0 0 32 32">
-                        <path d="M26 13 C26 21 16 29 16 29 S6 21 6 13 A10 10 0 1 1 26 13Z"/>
-                        <circle cx="16" cy="13" r="3"/>
-                    </svg>
-                </div>
-
-                <div class="detail-label" data-i18n="addressLabel">МАНЗИЛ</div>
-
-                <strong data-i18n-html="addressValue">
-                    "Навруз"<br>
-                    тўйхонаси<br>
-                    Ибрагим Ата кўчаси, 174
-                </strong>
-
+        <div class="detail address">
+            <div class="detail-icon">
+                <svg viewBox="0 0 32 32">
+                    <path d="M26 13C26 21 16 29 16 29S6 21 6 13A10 10 0 1 1 26 13Z"/>
+                    <circle cx="16" cy="13" r="3"/>
+                </svg>
             </div>
-
-        </div>
-
-        <div class="gold-rule"></div>
-
-        <div class="host-title" data-i18n="hostTitle">
-            Тўй эгалари:
-        </div>
-
-        <p class="hosts" data-i18n="hosts">
-            Сидихон дода ўғли Уткиржон Миркасимовлар хонадони
-        </p>
-
-        <div class="ornament">
-            <span>❦</span>
-        </div>
-
-        <p class="closing" data-i18n="closing">
-            Сизларни қувончли кунимизда кутиб қоламиз!
-        </p>
-
-        <div class="actions">
-            <button type="button" id="calendarBtn" data-i18n="calendarButton">КАЛЕНДАРГА ҚЎШИШ</button>
-            <button type="button" id="mapBtn" data-i18n="mapButton">МАНЗИЛНИ КЎРИШ</button>
+            <div class="detail-label" data-i18n="addressLabel">МАНЗИЛ</div>
+            <strong data-i18n-html="addressValue">
+                «Навруз»<br>тўйхонаси<br>Ибрагим Ата кўчаси, 174
+            </strong>
         </div>
 
     </div>
+
+    <div class="gold-rule"></div>
+
+    <div class="host-title" data-i18n="hostTitle">Тўй эгалари:</div>
+
+    <p class="hosts" data-i18n="hosts">
+        Сидихон дода ўғли Уткиржон Миркасимовлар хонадони
+    </p>
+
+    <div class="ornament"><span>❦</span></div>
+
+    <p class="closing" data-i18n="closing">
+        Сизларни қувончли кунимизда кутиб қоламиз!
+    </p>
+
+    <div class="actions">
+        <button type="button" id="calendarBtn" data-i18n="calendarButton">
+            КАЛЕНДАРГА ҚЎШИШ
+        </button>
+        <button type="button" id="mapBtn" data-i18n="mapButton">
+            МАНЗИЛНИ КЎРИШ
+        </button>
+    </div>
+
 </article>
 </main>
 
+<!-- MUSIC FILE: put music.mp3 beside index.html -->
 <audio id="weddingMusic" src="music.mp3" preload="auto" loop></audio>
 
 <button class="music" id="musicBtn" type="button" aria-label="Мусиқани бошқариш">
@@ -1020,88 +791,26 @@ main {
     </svg>
 </button>
 
-<style>
-/* Compact language switcher */
-.language-switch {
-    position:fixed;
-    z-index:1000;
-    top:max(12px, env(safe-area-inset-top));
-    right:max(12px, env(safe-area-inset-right));
-    display:flex;
-    align-items:center;
-    gap:3px;
-    padding:4px;
-    border:1px solid rgba(246,228,173,.65);
-    border-radius:30px;
-    background:rgba(49,13,25,.92);
-    box-shadow:0 5px 22px rgba(0,0,0,.28);
-    backdrop-filter:blur(10px);
-}
-.lang-option {
-    min-width:42px;
-    min-height:32px;
-    padding:6px 10px;
-    border:0;
-    border-radius:22px;
-    background:transparent;
-    color:#f6e4ad;
-    font:600 11px 'Cinzel',serif;
-    letter-spacing:1px;
-    transition:background .2s ease,color .2s ease,transform .2s ease;
-}
-.lang-option.active {
-    color:#35101d;
-    background:linear-gradient(135deg,#f6e4ad,#bd9147);
-}
-.lang-option:focus-visible {
-    outline:2px solid #fff0b8;
-    outline-offset:2px;
-}
-.lang-divider {
-    width:1px;
-    height:17px;
-    background:rgba(246,228,173,.35);
-}
-@media (max-width:600px) {
-    .language-switch {
-        top:max(8px, env(safe-area-inset-top));
-        right:max(8px, env(safe-area-inset-right));
-        padding:3px;
-    }
-    .lang-option { min-width:38px; min-height:30px; padding:5px 8px; }
-    #envelope-scene { padding-top:58px; }
-    main { width:100%; padding-left:10px; padding-right:10px; }
-    .invitation { width:100%; max-width:100%; min-width:0; }
-    .details { grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .detail { min-width:0; }
-    .detail.address { grid-column:1/-1; }
-    .detail strong { overflow-wrap:anywhere; }
-    .actions { flex-wrap:wrap; }
-    .actions button { max-width:100%; white-space:normal; }
-}
-@media (min-width:601px) {
-    .invitation { width:min(900px, calc(100vw - 40px)); }
-}
-html,body { max-width:100%; overflow-x:hidden; }
-*,*::before,*::after { box-sizing:border-box; }
-</style>
-
 <script>
 (() => {
+    "use strict";
+
+    const MAP_URL = "https://maps.app.goo.gl/3hFPnzrdWpeHXbRC6";
+
     const translations = {
         uz: {
             openingLabel: "Тўй таклифномаси",
             openButton: "ТАКЛИФНОМАНИ ОЧИШ",
             heading: "ТАКЛИФНОМА",
             greeting: "Азиз меҳмонлар!",
-            intro: "Сизларни азиз фарзандларимиз",
-            inviteText: "Шахло ва Миржалолнинг никоҳ тўйи муносабати билан ташкил этилаётган қувончли дастурхонимизга таклиф этамиз.",
+            intro: "Сизларни азиз фарзандларимиз Шахло ва Миржалолнинг",
+            inviteText: "никоҳ тўйи муносабати билан ташкил этилаётган қувончли дастурхонимизга таклиф этамиз.",
             dateLabel: "САНА",
             dateValue: "10<br>ноябрь",
             timeLabel: "ВАҚТ",
             timeValue: "19:00<br>соат",
             addressLabel: "МАНЗИЛ",
-            addressValue: "&laquo;Навруз&raquo;<br>тўйхонаси<br>Ибрагим Ата кўчаси, 174",
+            addressValue: "«Навруз»<br>тўйхонаси<br>Ибрагим Ата кўчаси, 174",
             hostTitle: "Тўй эгалари:",
             hosts: "Сидихон дода ўғли Уткиржон Миркасимовлар хонадони",
             closing: "Сизларни қувончли кунимизда кутиб қоламиз!",
@@ -1109,111 +818,9 @@ html,body { max-width:100%; overflow-x:hidden; }
             mapButton: "МАНЗИЛНИ КЎРИШ",
             musicLabel: "Мусиқани бошқариш"
         },
+
         kk: {
             openingLabel: "Үйлену тойына шақыру",
             openButton: "ШАҚЫРУДЫ АШУ",
             heading: "ШАҚЫРУ",
-            greeting: "Құрметті қонақтар!",
-            intro: "Сіздерді аяулы балаларымыз",
-            inviteText: "Шахло мен Миржалолдың некелесу тойына арналған қуаныш дастарқанына шақырамыз.",
-            dateLabel: "КҮНІ",
-            dateValue: "10<br>қараша",
-            timeLabel: "УАҚЫТЫ",
-            timeValue: "19:00<br>",
-            addressLabel: "МЕКЕНЖАЙЫ",
-            addressValue: "&laquo;Навруз&raquo;<br>тойханасы<br>Ибрагим Ата көшесі, 174",
-            hostTitle: "Той иелері:",
-            hosts: "Сидихон дода ұлы Өткіржон Миркасимовтар әулеті",
-            closing: "Қуанышты күнімізде сіздерді асыға күтеміз!",
-            calendarButton: "КҮНТІЗБЕГЕ ҚОСУ",
-            mapButton: "МЕКЕНЖАЙДЫ КӨРУ",
-            musicLabel: "Музыканы басқару"
-        }
-    };
-
-    const langButtons = document.querySelectorAll(".lang-option");
-    function setLanguage(lang) {
-        const selected = translations[lang] ? lang : "uz";
-        const words = translations[selected];
-        document.documentElement.lang = selected === "kk" ? "kk" : "uz";
-        document.querySelectorAll("[data-i18n]").forEach(el => {
-            const key = el.dataset.i18n;
-            if (words[key] !== undefined) el.textContent = words[key];
-        });
-        document.querySelectorAll("[data-i18n-html]").forEach(el => {
-            const key = el.dataset.i18nHtml;
-            if (words[key] !== undefined) el.innerHTML = words[key];
-        });
-        langButtons.forEach(button => {
-            const active = button.dataset.lang === selected;
-            button.classList.toggle("active", active);
-            button.setAttribute("aria-pressed", String(active));
-        });
-        const musicButton = document.getElementById("musicBtn");
-        if (musicButton) musicButton.setAttribute("aria-label", words.musicLabel);
-        try { localStorage.setItem("invitation-language", selected); } catch (error) {}
-    }
-
-    langButtons.forEach(button => {
-        button.addEventListener("click", () => setLanguage(button.dataset.lang));
-    });
-
-    const envelope = document.getElementById("envelope");
-    const scene = document.getElementById("envelope-scene");
-    const openButton = document.getElementById("openBtn");
-    const music = document.getElementById("weddingMusic");
-    const musicButton = document.getElementById("musicBtn");
-    let opened = false;
-
-    function openInvitation() {
-        if (opened) return;
-        opened = true;
-        envelope?.classList.add("opened");
-        window.setTimeout(() => {
-            scene?.classList.add("hidden");
-            musicButton?.classList.add("show");
-            if (music) music.play().catch(() => {});
-        }, 700);
-    }
-    envelope?.addEventListener("click", openInvitation);
-    envelope?.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openInvitation();
-        }
-    });
-    openButton?.addEventListener("click", openInvitation);
-
-    musicButton?.addEventListener("click", () => {
-        if (!music) return;
-        if (music.paused) {
-            music.play().catch(() => {});
-            musicButton.classList.add("playing");
-        } else {
-            music.pause();
-            musicButton.classList.remove("playing");
-        }
-    });
-    music?.addEventListener("play", () => musicButton?.classList.add("playing"));
-    music?.addEventListener("pause", () => musicButton?.classList.remove("playing"));
-
-    document.getElementById("mapBtn")?.addEventListener("click", () => {
-        const query = encodeURIComponent('Навруз тўйхонаси, Ибрагим Ата кўчаси, 174');
-        window.open('https://www.google.com/maps/search/?api=1&query=' + query, '_blank', 'noopener');
-    });
-    document.getElementById("calendarBtn")?.addEventListener("click", () => {
-        const start = "20261110T190000";
-        const end = "20261110T230000";
-        const title = encodeURIComponent("Шахло & Миржалол — никоҳ тўйи");
-        const details = encodeURIComponent('Навруз тўйхонаси, Ибрагим Ата кўчаси, 174');
-        window.open("https://calendar.google.com/calendar/render?action=TEMPLATE&text=" +
-            title + "&dates=" + start + "/" + end + "&details=" + details, "_blank", "noopener");
-    });
-
-    let initial = "uz";
-    try { initial = localStorage.getItem("invitation-language") || "uz"; } catch (error) {}
-    setLanguage(initial);
-})();
-</script>
-</body>
-</html>
+  
