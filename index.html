@@ -1,996 +1,152 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#260912">
-<title>Шахло &amp; Миржалол | Royal Invitation</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
-    --velvet:#310d19;
-    --wine:#54172b;
-    --ruby:#7d263b;
-    --gold:#bd9147;
-    --gold-light:#f6e4ad;
-    --gold-dark:#76501f;
-    --paper:#f8f0df;
-    --ink:#41251c;
-}
-
-* {
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html {
-    scroll-behavior:smooth;
-}
-
-body {
-    min-height:100vh;
-    background:#210a12;
-    color:var(--ink);
-    font-family:'Cormorant Garamond',serif;
-    overflow-x:hidden;
-}
-
-button {
-    font-family:inherit;
-    cursor:pointer;
-}
-
-/* =====================================
-   ROYAL VELVET BACKGROUND
-===================================== */
-
-body::before {
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    background:
-        radial-gradient(ellipse at 50% 10%,#652438 0%,transparent 48%),
-        radial-gradient(ellipse at 0% 80%,#4c1426 0%,transparent 45%),
-        linear-gradient(135deg,#16060c,#35101d 55%,#17070d);
-}
-
-body::after {
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    pointer-events:none;
-    opacity:.13;
-    background-image:
-        repeating-linear-gradient(
-            90deg,
-            transparent 0px,
-            #ffffff08 1px,
-            transparent 3px,
-            transparent 6px
-        );
-}
-
-/* =====================================
-   OPENING SCREEN
-===================================== */
-
-#envelope-scene {
-    position:fixed;
-    inset:0;
-    z-index:100;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:27px;
-    padding:20px;
-
-    background:
-        radial-gradient(ellipse at center,#69283c 0%,#3a101f 48%,#16060c 100%);
-
-    transition:opacity 1.5s,visibility 1.5s;
-}
-
-#envelope-scene.hidden {
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-}
-
-.opening-label {
-    font:11px Cinzel;
-    letter-spacing:5px;
-    color:var(--gold-light);
-    text-transform:uppercase;
-}
-
-.opening-title {
-    font:clamp(42px,10vw,66px) 'Great Vibes';
-    color:var(--gold-light);
-    text-align:center;
-    text-shadow:
-        0 2px 3px #000,
-        0 0 30px #e9bd6b77;
-}
-
-.opening-divider {
-    width:190px;
-    height:1px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #d5ad62,
-        #fff1c4,
-        #d5ad62,
-        transparent
-    );
-}
-
-/* Envelope */
-
-.envelope-wrap {
-    position:relative;
-    width:min(380px,88vw);
-    height:230px;
-    perspective:1400px;
-    cursor:pointer;
-    filter:drop-shadow(0 25px 30px #0009);
-}
-
-.envelope {
-    position:absolute;
-    inset:0;
-    border:1px solid #d9b66d;
-    border-radius:5px;
-    background:
-        linear-gradient(145deg,#722a41,#491629 65%,#290b17);
-    box-shadow:
-        inset 0 0 0 7px #ffffff08,
-        inset 0 0 25px #0005;
-}
-
-.envelope::before {
-    content:"";
-    position:absolute;
-    inset:12px;
-    border:1px solid #d9b66d77;
-}
-
-.flap {
-    position:absolute;
-    inset:0 0 auto;
-    height:60%;
-    z-index:3;
-    background:linear-gradient(150deg,#873b50,#4d192d);
-    clip-path:polygon(0 0,100% 0,50% 100%);
-    transform-origin:top;
-    transition:transform 1.1s ease;
-}
-
-.envelope-wrap.opened .flap {
-    transform:rotateX(180deg);
-}
-
-.seal {
-    position:absolute;
-    z-index:4;
-    top:52%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:82px;
-    height:82px;
-    display:grid;
-    place-items:center;
-    border-radius:50%;
-    border:3px double #f4d98e;
-    color:#f7e6b5;
-
-    background:
-        radial-gradient(circle at 30% 20%,#c47b76,#75253b 75%,#35101c);
-
-    box-shadow:
-        0 0 0 5px #b78d4a22,
-        0 0 30px #d9b66d44,
-        0 7px 20px #0008;
-
-    transition:.6s;
-}
-
-.seal span {
-    font:36px 'Great Vibes';
-}
-
-.envelope-wrap.opened .seal {
-    opacity:0;
-    transform:translate(-50%,-50%) scale(.15) rotate(40deg);
-}
-
-.open-button {
-    padding:15px 36px;
-    border:1px solid #f1d994;
-    border-radius:40px;
-    background:linear-gradient(
-        120deg,
-        #9a6d2f,
-        #f3d991,
-        #b28a43
-    );
-    color:#35111c;
-    font:11px Cinzel;
-    font-weight:700;
-    letter-spacing:3px;
-    box-shadow:0 7px 30px #0006;
-    transition:.3s;
-}
-
-.open-button:hover {
-    box-shadow:0 0 30px #d8b56b77;
-    transform:translateY(-2px);
-}
-
-/* =====================================
-   MAIN PAGE
-===================================== */
-
-main {
-    min-height:100vh;
-    padding:25px 12px 70px;
-    background:
-        radial-gradient(ellipse at 50% 0%,#fff9e9,#e8d8be 85%);
-}
-
-.invitation {
-    position:relative;
-    isolation:isolate;
-    width:100%;
-    max-width:760px;
-    margin:auto;
-    padding:35px 24px 30px;
-    overflow:hidden;
-    text-align:center;
-
-    background:
-        radial-gradient(ellipse at 50% 10%,#fffdf5,#f5ead7 75%);
-
-    border:2px solid #b88d45;
-    outline:1px solid #dfc58b;
-    outline-offset:-9px;
-
-    box-shadow:
-        0 20px 65px #16070e55,
-        inset 0 0 45px #c49b5322;
-}
-
-/* Golden border */
-
-.invitation::before {
-    content:"";
-    position:absolute;
-    inset:16px;
-    z-index:-1;
-    border:1px solid #b88d4580;
-    pointer-events:none;
-}
-
-.corner {
-    position:absolute;
-    width:75px;
-    height:75px;
-    z-index:2;
-    color:#a47b37;
-    opacity:.85;
-}
-
-.corner svg {
-    width:100%;
-    height:100%;
-}
-
-.corner-tl {
-    top:7px;
-    left:7px;
-}
-
-.corner-tr {
-    top:7px;
-    right:7px;
-    transform:scaleX(-1);
-}
-
-.corner-bl {
-    bottom:7px;
-    left:7px;
-    transform:scaleY(-1);
-}
-
-.corner-br {
-    bottom:7px;
-    right:7px;
-    transform:scale(-1);
-}
-
-/* =====================================
-   TYPOGRAPHY
-===================================== */
-
-.top-symbol {
-    font:36px 'Cinzel';
-    color:#9e7635;
-    margin-bottom:5px;
-    text-shadow:0 2px 4px #b58b4c55;
-}
-
-.heading {
-    font:clamp(24px,5vw,35px) Cinzel;
-    font-weight:700;
-    letter-spacing:clamp(3px,1.5vw,10px);
-    color:#956b2d;
-
-    text-shadow:
-        0 1px #fff,
-        0 2px 1px #e1c98f,
-        0 4px 5px #8c652c55;
-}
-
-.gold-rule {
-    width:78%;
-    height:2px;
-    margin:12px auto;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #a67a35,
-        #f8e7b2,
-        #a67a35,
-        transparent
-    );
-}
-
-.subtitle {
-    font:600 clamp(20px,5vw,26px) 'Playfair Display';
-    color:#4c2c20;
-    margin-top:15px;
-}
-
-.description {
-    font:clamp(19px,4.7vw,25px) 'Cormorant Garamond';
-    line-height:1.3;
-    color:#52372a;
-    margin:4px auto;
-}
-
-.names {
-    font:700 clamp(37px,9.5vw,72px)/1.15 'Playfair Display';
-    letter-spacing:1px;
-    color:#805421;
-    margin:24px auto 10px;
-
-    text-shadow:
-        0 1px 0 #fff,
-        0 2px 0 #e1c58b,
-        0 4px 8px #7a4b1e66;
-}
-
-.rings {
-    width:90px;
-    height:48px;
-    margin:0 auto 10px;
-    display:block;
-    filter:drop-shadow(0 3px 4px #9a6a2e55);
-}
-
-.invitation-text {
-    font:clamp(19px,4.8vw,25px) 'Cormorant Garamond';
-    line-height:1.35;
-    color:#523629;
-    max-width:580px;
-    margin:10px auto 20px;
-}
-
-.ornament {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    margin:20px auto;
-    color:#aa803a;
-}
-
-.ornament::before,
-.ornament::after {
-    content:"";
-    width:75px;
-    height:1px;
-    background:linear-gradient(90deg,transparent,#a9803d);
-}
-
-.ornament::after {
-    transform:rotate(180deg);
-}
-
-.ornament span {
-    font:20px Cinzel;
-}
-
-/* =====================================
-   EVENT DETAILS
-===================================== */
-
-.details {
-    display:grid;
-    grid-template-columns:1fr 1fr 1.35fr;
-    gap:9px;
-    margin:23px 0;
-}
-
-.detail {
-    position:relative;
-    min-width:0;
-    min-height:130px;
-    padding:13px 6px;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        linear-gradient(145deg,#fffdf8,#f0e2ce);
-
-    border:1px solid #b79a72;
-
-    box-shadow:
-        inset 0 0 0 3px #fff9ed,
-        inset 0 0 0 4px #d5bd91,
-        0 5px 14px #60401e22;
-}
-
-.detail::before,
-.detail::after {
-    content:"✧";
-    position:absolute;
-    color:#a57a35;
-    font-size:13px;
-}
-
-.detail::before {top:3px}
-.detail::after {bottom:3px}
-
-.detail-icon {
-    width:30px;
-    height:30px;
-    margin-bottom:5px;
-    color:#79583a;
-}
-
-.detail-icon svg {
-    width:100%;
-    height:100%;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.6;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.detail-label {
-    font:10px Cinzel;
-    letter-spacing:2px;
-    color:#92703e;
-}
-
-.detail strong {
-    display:block;
-    font:600 clamp(16px,4vw,23px) 'Playfair Display';
-    line-height:1.2;
-    color:#59361f;
-    margin-top:6px;
-}
-
-.address strong {
-    font-size:clamp(12px,3.1vw,17px);
-    overflow-wrap:anywhere;
-}
-
-/* =====================================
-   HOSTS AND VENUE
-===================================== */
-
-.host-title {
-    font:italic clamp(20px,5vw,25px) 'Playfair Display';
-    color:#87602c;
-    margin:18px auto 7px;
-}
-
-.hosts {
-    font:600 clamp(19px,4.7vw,25px)/1.3 'Cormorant Garamond';
-    color:#4f3225;
-}
-
-.closing {
-    font:clamp(18px,4.3vw,23px)/1.4 'Cormorant Garamond';
-    color:#503729;
-    margin:16px auto;
-}
-
-.venue {
-    position:relative;
-    margin:25px -5px 0;
-    padding:22px 10px 17px;
-
-    border-top:2px solid #bd9147;
-    border-bottom:2px solid #bd9147;
-
-    background:
-        linear-gradient(145deg,#f0dfbe,#d9bc8b,#f4e8d2);
-
-    box-shadow:
-        inset 0 0 0 4px #ffffff55,
-        inset 0 0 25px #9d713c33;
-}
-
-.venue-name {
-    font:600 clamp(25px,6vw,39px) Cinzel;
-    letter-spacing:6px;
-    color:#4b2a20;
-    text-shadow:0 2px 3px #c7a66d;
-}
-
-.venue-sub {
-    font:12px Cinzel;
-    letter-spacing:5px;
-    color:#77532c;
-    margin-top:5px;
-}
-
-/* =====================================
-   BUTTONS
-===================================== */
-
-.actions {
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-top:24px;
-}
-
-.actions button {
-    padding:12px 21px;
-    border:1px solid #a98140;
-    border-radius:30px;
-
-    background:linear-gradient(
-        135deg,
-        #fffaf0,
-        #e8d3a9
-    );
-
-    color:#694820;
-    font:11px Cinzel;
-    letter-spacing:2px;
-
-    transition:.3s;
-}
-
-.actions button:hover {
-    transform:translateY(-3px);
-    box-shadow:0 6px 18px #a77b3d33;
-}
-
-/* =====================================
-   MUSIC
-===================================== */
-
-.music {
-    position:fixed;
-    right:18px;
-    bottom:20px;
-    z-index:150;
-
-    width:56px;
-    height:56px;
-
-    display:none;
-    place-items:center;
-
-    border:2px solid #f4dda0;
-    border-radius:50%;
-
-    background:linear-gradient(
-        135deg,
-        #f6e4a9,
-        #b78a40
-    );
-
-    color:#431a25;
-    box-shadow:0 5px 25px #0005;
-}
-
-.music.show {
-    display:grid;
-}
-
-.music svg {
-    width:25px;
-    height:25px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.7;
-}
-
-.music.playing {
-    animation:musicSpin 8s linear infinite;
-}
-
-@keyframes musicSpin {
-    to {transform:rotate(360deg)}
-}
-
-/* =====================================
-   GOLDEN PARTICLES
-===================================== */
-
-.particle {
-    position:fixed;
-    top:-10px;
-    z-index:90;
-    width:4px;
-    height:4px;
-    border-radius:50%;
-    background:#f4d58b;
-    box-shadow:0 0 9px 2px #d7a84f88;
-    pointer-events:none;
-    animation:particleFall linear forwards;
-}
-
-@keyframes particleFall {
-    to {
-        transform:translate(40px,110vh);
-        opacity:0;
-    }
-}
-
-/* =====================================
-   PETALS
-===================================== */
-
-.petal {
-    position:fixed;
-    top:-25px;
-    z-index:85;
-    width:12px;
-    height:18px;
-    border-radius:80% 0 80% 0;
-    background:linear-gradient(135deg,#fff0dd,#b75b6a);
-    pointer-events:none;
-    animation:petalFall linear forwards;
-}
-
-@keyframes petalFall {
-    to {
-        transform:translate(90px,110vh) rotate(650deg);
-        opacity:0;
-    }
-}
-
-/* =====================================
-   ENTRANCE ANIMATION
-===================================== */
-
-.invite-content {
-    animation:reveal 1.8s ease both;
-}
-
-@keyframes reveal {
-    from {
-        opacity:0;
-        transform:translateY(25px);
-        filter:blur(5px);
-    }
-
-    to {
-        opacity:1;
-        transform:translateY(0);
-        filter:blur(0);
-    }
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media(max-width:600px) {
-
-    main {
-        padding:7px 4px 30px;
-    }
-
-    .invitation {
-        padding:29px 12px 22px;
-        width:100%;
-    }
-
-    .corner {
-        width:49px;
-        height:49px;
-    }
-
-    .details {
-        gap:5px;
-    }
-
-    .detail {
-        min-height:116px;
-        padding:9px 3px;
-    }
-
-    .detail-label {
-        font-size:8px;
-        letter-spacing:1px;
-    }
-
-    .detail-icon {
-        width:26px;
-        height:26px;
-    }
-
-    .names {
-        font-size:clamp(35px,9.2vw,55px);
-    }
-
-    .heading {
-        letter-spacing:3px;
-    }
-
-    .venue {
-        margin-left:0;
-        margin-right:0;
-    }
-}
-
-@media(max-width:360px) {
-
-    .details {
-        grid-template-columns:1fr 1fr;
-    }
-
-    .detail.address {
-        grid-column:1/-1;
-        min-height:100px;
-    }
-
-    .names {
-        font-size:35px;
-    }
-}
-
-@media(prefers-reduced-motion:reduce) {
-    *,*::before,*::after {
-        animation-duration:.01ms!important;
-        transition-duration:.01ms!important;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taklifnoma / Шақыру</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fcf8f2;
+            color: #4a4a4a;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            max-width: 700px;
+            width: 100%;
+            padding: 50px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e8dfd8;
+            text-align: center;
+            position: relative;
+        }
+
+        .decorative-title {
+            font-family: 'Alex Brush', cursive;
+            font-size: 56px;
+            color: #b8860b;
+            margin-bottom: 10px;
+        }
+
+        .divider {
+            height: 2px;
+            width: 100px;
+            background: #b8860b;
+            margin: 25px auto;
+        }
+
+        .lang-section {
+            margin-bottom: 30px;
+        }
+
+        .lang-title {
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b8860b;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .details {
+            background: #faf6f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .details strong {
+            color: #b8860b;
+        }
+
+        .music-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 28px;
+            background-color: #b8860b;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .music-btn:hover {
+            background-color: #966d09;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- OPENING ENVELOPE -->
-
-<section id="envelope-scene">
-
-    <div class="opening-label">
-        Свадебное приглашение
-    </div>
-
-    <div class="opening-title">
-        Шахло &amp; Миржалол
-    </div>
-
-    <div class="opening-divider"></div>
-
-    <div class="envelope-wrap" id="envelope"
-         role="button" tabindex="0"
-         aria-label="Открыть приглашение">
-
-        <div class="envelope"></div>
-        <div class="flap"></div>
-
-        <div class="seal">
-            <span>Ш &amp; М</span>
+    <div class="card">
+        <div class="decorative-title">Taklifnoma / Шақыру</div>
+        
+        <!-- Узбекский язык (Кириллица) -->
+        <div class="lang-section">
+            <div class="lang-title">Ўзбек тилида</div>
+            <p><strong>Ҳурматли меҳмонлар!</strong></p>
+            <p>Сизни самимий қувончимизга шерик бўлишга ва тўй тантанамизга таклиф этамиз. Сизнинг ташрифингиз бизнинг байрамимизга ўзгача файз ва қувонч бағишлайди!</p>
         </div>
 
-    </div>
+        <div class="divider"></div>
 
-    <button class="open-button" id="openBtn">
-        ОТКРЫТЬ ПРИГЛАШЕНИЕ
-    </button>
-
-</section>
-
-<!-- INVITATION -->
-
-<main>
-
-<article class="invitation">
-
-    <!-- CORNER ORNAMENTS -->
-
-    <div class="corner corner-tl">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="27" cy="27" r="4" fill="currentColor"/>
-            <circle cx="52" cy="18" r="3" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <div class="corner corner-tr">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="27" cy="27" r="4" fill="currentColor"/>
-            <circle cx="52" cy="18" r="3" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <div class="corner corner-bl">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
-        </svg>
-    </div>
-
-    <div class="corner corner-br">
-        <svg viewBox="0 0 100 100">
-            <path d="M8 85 Q8 8 85 8 M8 45 Q45 45 45 8 M8 65 Q65 65 65 8"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M15 85 Q20 55 48 48 Q58 22 85 15"
-                  fill="none" stroke="currentColor" stroke-width="1.5"/>
-        </svg>
-    </div>
-
-    <div class="invite-content">
-
-        <div class="top-symbol">❦</div>
-
-        <div class="heading">
-            ТАКЛИФНОМА
+        <!-- Казахский язык -->
+        <div class="lang-section">
+            <div class="lang-title">Қазақ тілінде</div>
+            <p><strong>Құрметті қонақтар!</strong></p>
+            <p>Сіздерді қуанышымызға ортақтасып, тойымыздың қадірлі қонағы болуға шақырамыз. Сіздердің қатысуларыңыз біздің мерекемізді одан әрі ажарландыра түседі!</p>
         </div>
 
-        <div class="gold-rule"></div>
-
-        <div class="subtitle">
-            Азиз меҳмонлар!
-        </div>
-
-        <p class="description">
-            Сизни азиз фарзандларимиз
-        </p>
-
-        <div class="names">
-            ШАХЛО &amp; МИРЖАЛОЛ
-        </div>
-
-        <!-- SVG WEDDING RINGS -->
-
-        <svg class="rings" viewBox="0 0 120 60">
-            <defs>
-                <linearGradient id="ringGold" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#fff0b8"/>
-                    <stop offset="35%" stop-color="#c49a49"/>
-                    <stop offset="65%" stop-color="#8b5c20"/>
-                    <stop offset="100%" stop-color="#f3d68b"/>
-                </linearGradient>
-            </defs>
-
-            <ellipse cx="47" cy="32" rx="28" ry="15"
-                transform="rotate(-28 47 32)"
-                fill="none" stroke="url(#ringGold)" stroke-width="5"/>
-
-            <ellipse cx="73" cy="32" rx="28" ry="15"
-                transform="rotate(28 73 32)"
-                fill="none" stroke="url(#ringGold)" stroke-width="5"/>
-
-            <path d="M57 13 L60 6 L63 13 L70 16 L63 19 L60 26 L57 19 L50 16 Z"
-                fill="#bd9147"/>
-        </svg>
-
-        <p class="invitation-text">
-            ларнинг никоҳ тўйи муносабати билан
-            ёзиладиган қувончли дастурхонимизга
-            таклиф этамиз.
-        </p>
-
-        <div class="ornament">
-            <span>✦</span>
-        </div>
-
-        <!-- DATE / TIME / LOCATION -->
-
+        <!-- Детали события -->
         <div class="details">
-
-            <div class="detail">
-
-                <div class="detail-icon">
-                    <svg viewBox="0 0 32 32">
-                        <rect x="4" y="7" width="24" height="21" rx="2"/>
-                        <path d="M10 4 V10 M22 4 V10 M4 13 H28"/>
-                        <path d="M10 18 H13 M19 18 H22 M10 23 H13"/>
-                    </svg>
-                </div>
-
-                <div class="detail-label">САНА</div>
-
-                <strong>10<br>ноябрь</strong>
-
-            </div>
-
-            <div class="detail">
-
-                <div class="detail-icon">
-                    <svg viewBox="0 0 32 32">
-                        <circle cx="16" cy="16" r="12"/>
-                        <path d="M16 8 V16 L22 20"/>
-                    </svg>
-                </div>
-
-                <div class="detail-label">ВАҚТ</div>
-
-                <strong>19:00<br>соат</strong>
-
-            </div>
-
-            <div class="detail address">
-
-                <div class="detail-icon">
-                    <svg viewBox="0 0 32 32">
-                        <path d="M26 13 C26 21 16 29 16 29 S6 21 6 13 A10 10 0 1 1 26 13Z"/>
-                        <circle cx="16" cy="13" r="3"/>
-                    </svg>
-                </div>
-
-                <div class="detail-label">МАНЗИЛ</div>
-
-                <strong>
-                    "Навруз"<br>
-                    тўйхонаси<br>
-                    Ибрагим Ата кўчаси, 174
-                </strong>
-
-            </div>
-
+            <p><strong>Күн / Дата:</strong> 00.00.2026 ж.</p>
+            <p><strong>Уақыт / Вақти:</strong> 18:00</p>
+            <p><strong>Мекен-жай / Манзил:</strong> Ресторан "Тантана"</p>
         </div>
 
-        <div class="gold-rule"></div>
+        <!-- Кнопка управления музыкой -->
+        <button class="music-btn" onclick="toggleMusic()">🎵 Музыканы қосу / Ўчириш</button>
 
-        <div class="host-title">
-            Тўй эгалари:
-        </div>
+        <audio id="bgMusic" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
-        <p class="hosts">
-            Сидихон дода ўғли Уткиржон
-            Миркасимовлар хонадони
-        </p>
+    <script>
+        function toggleMusic() {
+            var audio = document.getElementById("bgMusic");
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+    </script>
 
-        <div class="ornament">
-            <span>❦</span>
-        </div>
-
-        <p class="closing">
-            Сизларни қу
+</body>
+</html>
